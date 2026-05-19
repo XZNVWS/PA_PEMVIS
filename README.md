@@ -47,7 +47,7 @@ Untuk memudahkan dosen atau asisten praktikum saat melakukan pengujian sistem, b
 ## 🛠️ Prasyarat & Lingkungan Pengembangan
 
 * **IDE:** Visual Studio 2022-2026 (atau versi kompatibel yang mendukung .NET Framework / .NET Desktop Development).
-* **DBMS:** MySQL Server via XAMPP Control Panel (port 3307).
+* **DBMS:** MySQL Server via XAMPP Control Panel (port 3306/3307).
 * **Driver Konektor:** `MySql.Data.MySqlClient` atau `MySqlConnector` terpasang pada *References* proyek.
 
 ---
