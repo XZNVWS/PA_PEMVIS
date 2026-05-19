@@ -10,9 +10,9 @@ Aplikasi ini mengimplementasikan arsitektur *Role-Based Access Control* (RBAC) y
 
 Berikut adalah anggota kelompok pengembang sistem:
 
-* **Devon Falen Pasae** (NIM. 2409106055) 
-* **Andi Nurfadillah Hasan** (NIM. 2409106087) 
+* **Devon Falen Pasae** (NIM. 2409106055)
 * **Anindtya Puji Astari** (NIM. 2409106063)
+* **Andi Nurfadillah Hasan** (NIM. 2409106087)
 * **Fachlevi Muhammad** (NIM. 2409106059) 
 
 ---
