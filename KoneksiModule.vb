@@ -8,7 +8,7 @@ Module KoneksiModule
     Public Rd As MySqlDataReader
 
     Private ConnectionString As String =
-        "server=localhost;port=3307;user id=root;password=;database=db_donor_darah;Convert Zero Datetime=True"
+        "server=localhost;port=3306;user id=root;password=;database=db_donor_darah;Convert Zero Datetime=True"
 
     Public Sub BukaKoneksi()
         Try
