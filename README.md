@@ -44,6 +44,45 @@ Untuk memudahkan dosen atau asisten praktikum saat melakukan pengujian sistem, b
 
 ---
 
+## 🔄 Pembaruan & Fitur Hasil Revisi Sistem (Pasca-Konsultasi)
+
+Berdasarkan hasil evaluasi dan konsultasi, alur sistem telah dirombak total menjadi lebih efisien dan aman:
+1. **Single Registration & Auto-Fill Framework:** Proses registrasi kini langsung terhubung sebagai form data pendonor dasar. Saat user login dan membuka form donasi, sistem secara otomatis menarik data profil dari *session* aktif secara *Read-Only*. User tidak perlu mengisi ulang nama/email, melainkan cukup menginput **Jumlah Donasi** dan opsi checkbox.
+2. **Form Donasi Minimalis:** Form pendonor kini digabung langsung dengan form donasi demi menyederhanakan *User Experience*.
+3. **Pusat Kontrol di Admin (Anti-Anomali):** Hak akses CRUD (Tambah, Edit, Hapus) sepenuhnya dipindahkan ke Admin. User biasa dikunci total dan tidak dapat memanipulasi data master/orang lain untuk menghindari manipulasi data stok darah global.
+4. **Halaman Monitoring Dual-View:** Halaman monitoring bertindak sebagai pusat informasi bersama. User hanya dapat melihat riwayat donasi pribadinya sendiri, sedangkan Admin dapat memantau, memverifikasi seluruh data yang masuk, serta menginput hasil konsultasi medis.
+
+---
+
+## 🧠 Fitur Pintar & Logika Bisnis Lanjutan (Advanced Features)
+
+Sistem ini dirancang dengan logika backend yang "pintar" di luar fungsi CRUD standar untuk memastikan kelayakan nilai tinggi:
+
+* **Approval Workflow:** Stok darah global **tidak akan bertambah** saat user mengirim (*submit*) data donasi (status default: `Pending`). Kuantitas stok hanya akan bertambah secara otomatis setelah Admin melakukan verifikasi (`Terverifikasi`).
+* **Sistem Peringatan Dini (Low Stock Alert):** Dashboard Admin dilengkapi fitur pengecekan otomatis yang akan memicu indikator peringatan/pop-up jika kuantitas stok darah golongan tertentu (A/B/AB/O) turun di bawah ambang batas minimum (**10 kantung**).
+* **Audit Trail (Log Sirkulasi Darah):** Penambahan tabel khusus `log_sirkulasi_darah` yang merekam setiap aksi masuk (dari donasi disetujui) dan keluar (distribusi) secara otomatis untuk transparansi data jika terjadi selisih stok.
+* **Fitur Donasi Anonim (Flagging System):** Penambahan logika `is_anonim` (Boolean). Jika dicentang oleh user, nama pendonor otomatis disamarkan menjadi *"Hamba Allah / Anonim"* pada data monitoring publik dan dokumen kuitansi cetak, namun tetap teridentifikasi asli di sistem internal admin.
+* **Manajemen Konsultasi Terintegrasi:** Admin dapat menginput catatan medis hasil konsultasi serta jadwal donor kembali, yang datanya otomatis tersinkronisasi ke monitoring user untuk dicetak.
+* **Validasi Input User-Friendly:** Menggunakan komponen `ErrorProvider` untuk mendeteksi *field* kosong/format email secara *real-time*, serta penanganan event `KeyPress` untuk membatasi input jumlah donasi hanya menerima karakter numerik (angka).
+* **Pencegahan Orphan Data:** Penerapan referensial *Integrity Constraints* (`CASCADE/RESTRICT`) pada relasi *Foreign Key* di database MySQL agar tidak ada data transaksi yang kehilangan relasi induk saat data user dikelola.
+
+---
+
+## 📢 Panduan Responsiksi & Presentasi (Khusus Kelompok & Aslab)
+
+### 🗣️ Poin Script Presentasi Utama
+*"Sistem Informasi Manajemen Donor Darah ini kami bangun atas 3 pilar utama: **Efisiensi Pengguna** lewat Single Registration dan Auto-Fill Framework, **Keamanan Data** melalui pembatasan akses ketat berbasis peran (RBAC), serta **Otomatisasi Logika Bisnis** di backend berupa sinkronisasi otomatis status verifikasi terhadap perubahan stok, Audit Trail sirkulasi, dan Low Stock Alert."*
+
+### ❓ Strategi Menjawab Pertanyaan Teknis Dosen/Aslab
+* **Q: Kenapa stok darah tidak langsung bertambah saat user submit?**
+    * *A: Untuk menjaga validasi medis dan integritas data. Donasi harus melalui proses verifikasi dan peninjauan fisik oleh admin/petugas terlebih dahulu guna menghindari data sampah atau kesalahan input jumlah kantung.*
+* **Q: Apa fungsi tabel log_sirkulasi_darah jika sudah ada tabel donasi dan stok?**
+    * *A: Sebagai pemenuhan syarat **Audit Trail**. Tabel stok hanya mencatat saldo akhir real-time, sedangkan tabel log mencatat riwayat kronologis keluar-masuknya darah. Jika terjadi selisih fisik stok, kita bisa melacak detail riwayat transaksinya lewat tabel log ini untuk mencegah fraud.*
+* **Q: Kenapa ada fitur tambahan di luar CRUD dasar?**
+    * *A: Sistem ini dirancang bukan hanya untuk manipulasi data biasa, melainkan berorientasi pada kebutuhan nyata di lapangan agar pengelolaan donor darah berjalan lebih akuntabel, aman, dan minim kesalahan faktor manusia (*human error*).*
+
+---
+
 ## 🛠️ Prasyarat & Lingkungan Pengembangan
 
 * **IDE:** Visual Studio 2022-2026 (atau versi kompatibel yang mendukung .NET Framework / .NET Desktop Development).
