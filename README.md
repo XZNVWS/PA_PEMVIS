@@ -68,21 +68,6 @@ Sistem ini dirancang dengan logika backend yang "pintar" di luar fungsi CRUD sta
 
 ---
 
-## 📢 Panduan Responsiksi & Presentasi (Khusus Kelompok & Aslab)
-
-### 🗣️ Poin Script Presentasi Utama
-*"Sistem Informasi Manajemen Donor Darah ini kami bangun atas 3 pilar utama: **Efisiensi Pengguna** lewat Single Registration dan Auto-Fill Framework, **Keamanan Data** melalui pembatasan akses ketat berbasis peran (RBAC), serta **Otomatisasi Logika Bisnis** di backend berupa sinkronisasi otomatis status verifikasi terhadap perubahan stok, Audit Trail sirkulasi, dan Low Stock Alert."*
-
-### ❓ Strategi Menjawab Pertanyaan Teknis Dosen/Aslab
-* **Q: Kenapa stok darah tidak langsung bertambah saat user submit?**
-    * *A: Untuk menjaga validasi medis dan integritas data. Donasi harus melalui proses verifikasi dan peninjauan fisik oleh admin/petugas terlebih dahulu guna menghindari data sampah atau kesalahan input jumlah kantung.*
-* **Q: Apa fungsi tabel log_sirkulasi_darah jika sudah ada tabel donasi dan stok?**
-    * *A: Sebagai pemenuhan syarat **Audit Trail**. Tabel stok hanya mencatat saldo akhir real-time, sedangkan tabel log mencatat riwayat kronologis keluar-masuknya darah. Jika terjadi selisih fisik stok, kita bisa melacak detail riwayat transaksinya lewat tabel log ini untuk mencegah fraud.*
-* **Q: Kenapa ada fitur tambahan di luar CRUD dasar?**
-    * *A: Sistem ini dirancang bukan hanya untuk manipulasi data biasa, melainkan berorientasi pada kebutuhan nyata di lapangan agar pengelolaan donor darah berjalan lebih akuntabel, aman, dan minim kesalahan faktor manusia (*human error*).*
-
----
-
 ## 🛠️ Prasyarat & Lingkungan Pengembangan
 
 * **IDE:** Visual Studio 2022-2026 (atau versi kompatibel yang mendukung .NET Framework / .NET Desktop Development).
