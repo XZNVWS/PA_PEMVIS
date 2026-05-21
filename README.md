@@ -39,8 +39,7 @@ Untuk memudahkan dosen atau asisten praktikum saat melakukan pengujian sistem, b
 2.  **Auto-Fill Framework:** Pengisian form donasi secara otomatis menarik profil akun aktif untuk efisiensi input.
 3.  **Automated Stock Trigger:** Verifikasi donasi oleh admin secara otomatis menambah kuantitas tabel `stok_darah` dan mencatatnya pada `log_sirkulasi_darah`.
 4.  **Low Stock Alert:** Sistem peringatan dini visual di dashboard admin jika stok golongan darah tertentu berada di bawah batas minimum (10 kantung).
-5.  **Anonymous Donor Option:** Fitur penyamaran nama pendonor menjadi *"Hamba Allah / Anonim"* pada lembar cetak kuitansi.
-6.  **Native Document Printing:** Implementasi komponen `PrintDocument` untuk mencetak kuitansi dan lembar hasil konsultasi secara langsung.
+5.  **Native Document Printing:** Implementasi komponen `PrintDocument` untuk mencetak kuitansi dan lembar hasil konsultasi secara langsung.
 
 ---
 
@@ -70,7 +69,7 @@ Sistem ini dirancang dengan logika backend yang "pintar" di luar fungsi CRUD sta
 ## 🛠️ Prasyarat & Lingkungan Pengembangan
 
 * **IDE:** Visual Studio 2022-2026 (atau versi kompatibel yang mendukung .NET Framework / .NET Desktop Development).
-* **DBMS:** MySQL Server via XAMPP Control Panel (port 3306/3307).
+* **DBMS:** MySQL Server via XAMPP Control Panel (port 3306).
 * **Driver Konektor:** `MySql.Data.MySqlClient` atau `MySqlConnector` terpasang pada *References* proyek.
 
 ---
