@@ -6,7 +6,7 @@ Aplikasi ini mengimplementasikan arsitektur *Role-Based Access Control* (RBAC) y
 
 ---
 
-## 👥 Anggota Kelompok (Informatics B - Batch 2026)
+## 👥 Anggota Kelompok (Informatics B)
 
 Berikut adalah anggota kelompok pengembang sistem:
 
