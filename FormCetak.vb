@@ -1,44 +1,55 @@
 ﻿Imports MySql.Data.MySqlClient
+Imports System.Drawing.Printing
 
 Public Class FormCetak
-    Private _idDonasi As Integer
-    Private _mode As String
-
-    Public Sub New(id As Integer, mode As String)
-        InitializeComponent()
-        _idDonasi = id
-        _mode = mode
-    End Sub
+    Public SelectedIdDonasi As Integer = 1
 
     Private Sub FormCetak_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        PrintPreviewDialog1.Document = PrintDocument1
-        PrintPreviewDialog1.ShowDialog()
-        Me.Close()
+        AmbilData()
     End Sub
 
-    Private Sub PrintDocument1_PrintPage(sender As Object, e As Printing.PrintPageEventArgs) Handles PrintDocument1.PrintPage
-        Dim g As Graphics = e.Graphics
-        Dim titleFont As New Font("Arial", 16, FontStyle.Bold)
-        Dim bodyFont As New Font("Arial", 12)
+    Sub AmbilData()
+        Try
+            BukaKoneksi()
+            Dim sql As String = "SELECT d.id_donasi, u.nama_lengkap, u.golongan_darah, d.jumlah_donasi, d.tanggal_donasi, d.jadwal_kembali " &
+                               "FROM donasi d JOIN users u ON d.id_user = u.id_user " &
+                               "WHERE d.id_donasi = @id"
+            Cmd = New MySqlCommand(sql, Conn)
+            Cmd.Parameters.AddWithValue("@id", SelectedIdDonasi)
+            Rd = Cmd.ExecuteReader()
 
-        BukaKoneksi()
-        Cmd = New MySqlCommand("SELECT d.*, u.nama_lengkap FROM donasi d JOIN users u ON d.id_user = u.id_user WHERE d.id_donasi = @id", Conn)
-        Cmd.Parameters.AddWithValue("@id", _idDonasi)
-        Rd = Cmd.ExecuteReader()
+            If Rd.Read() Then
+                lblIdDonasi.Text = ": BD-" & Rd("id_donasi").ToString()
+                lblNama.Text = ": " & Rd("nama_lengkap").ToString()
+                lblGolDarah.Text = ": " & Rd("golongan_darah").ToString()
+                lblJumlah.Text = ": " & Rd("jumlah_donasi").ToString() & " Kantong"
+                lblTanggal.Text = ": " & CDate(Rd("tanggal_donasi")).ToString("dd/MM/yyyy")
 
-        If Rd.Read() Then
-            g.DrawString("LAPORAN DONOR DARAH", titleFont, Brushes.Black, 250, 50)
-            g.DrawString("ID Donasi: " & _idDonasi, bodyFont, Brushes.Black, 50, 100)
-            g.DrawString("Nama: " & Rd("nama_lengkap").ToString(), bodyFont, Brushes.Black, 50, 130)
-
-            If _mode = "kuitansi" Then
-                g.DrawString("Jumlah Donasi: " & Rd("jumlah_donasi").ToString() & " Kantung", bodyFont, Brushes.Black, 50, 160)
-            Else
-                g.DrawString("Hasil Medis: " & Rd("hasil_konsultasi").ToString(), bodyFont, Brushes.Black, 50, 160)
-                g.DrawString("Jadwal Kembali: " & Rd("jadwal_kembali").ToString(), bodyFont, Brushes.Black, 50, 190)
+                If Not IsDBNull(Rd("jadwal_kembali")) Then
+                    lblJadwalKembali.Text = ": " & CDate(Rd("jadwal_kembali")).ToString("dd/MM/yyyy")
+                Else
+                    lblJadwalKembali.Text = ": -"
+                End If
             End If
-        End If
-        Rd.Close()
-        TutupKoneksi()
+            Rd.Close()
+        Catch ex As Exception
+            MsgBox("Error: " & ex.Message)
+        Finally
+            TutupKoneksi()
+        End Try
+    End Sub
+
+    Private WithEvents pd As New PrintDocument
+
+    Private Sub btnCetak_Click(sender As Object, e As EventArgs) Handles btnCetak.Click
+        Dim ppd As New PrintPreviewDialog()
+        ppd.Document = pd
+        ppd.ShowDialog()
+    End Sub
+
+    Private Sub pd_PrintPage(sender As Object, e As PrintPageEventArgs) Handles pd.PrintPage
+        Dim bmp As New Bitmap(pnlKuitansi.Width, pnlKuitansi.Height)
+        pnlKuitansi.DrawToBitmap(bmp, New Rectangle(0, 0, pnlKuitansi.Width, pnlKuitansi.Height))
+        e.Graphics.DrawImage(bmp, 100, 100)
     End Sub
 End Class
